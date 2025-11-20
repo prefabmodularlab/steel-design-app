@@ -59,44 +59,4 @@ def load_data_safe(file):
         return None, f"데이터 로드 중 오류: {e}"
 
 def find_best_section(df, Mu, Vu, L, max_defl_ratio=360):
-    """최적 휨 부재 선정"""
-    Fy = 275; E = 205000; Phi_b = 0.9
-    candidates = []
-    for _, row in df.iterrows():
-        Mn = row['Zx'] * Fy
-        if Mu > Phi_b * Mn: continue # 강도 부족
-        
-        delta = (5 * Mu * L**2) / (48 * E * row['Ix'])
-        if delta > (L / max_defl_ratio): continue # 처짐 과다
-        
-        candidates.append(row)
-    
-    if not candidates: return None
-    return pd.DataFrame(candidates).sort_values(by='W').iloc[0]
-
-def find_column_section(df, Pu, L_unbraced):
-    """최적 기둥 부재 선정"""
-    Fy = 275; E = 205000; Phi_c = 0.9
-    candidates = []
-    for _, row in df.iterrows():
-        Iy_est = row['Ix'] * 0.3 # 약축 가정
-        Pe = (3.14159**2 * E * Iy_est) / (L_unbraced**2)
-        Pn = min(0.7 * Pe, row['A'] * Fy)
-        
-        if Pu <= Phi_c * Pn:
-            candidates.append(row)
-            
-    if not candidates: return None
-    return pd.DataFrame(candidates).sort_values(by='W').iloc[0]
-
-def draw_3d_model(Lx, Ly, H, spacing, res):
-    """3D 모델링 시각화"""
-    fig = go.Figure()
-    def add_line(x, y, z, color, name, width=5):
-        fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode='lines',
-            line=dict(color=color, width=width), name=name, showlegend=False))
-
-    # 기둥
-    cols_x, cols_y = [0, Lx, Lx, 0], [0, 0, Ly, Ly]
-    for i in range(4):
-        add_line([cols_x[i], cols_x[i]], [cols_y[i], cols_y[i]], [0, H], 'red', '
+    """최적 휨 부

@@ -99,17 +99,4 @@ def draw_3d_model(Lx, Ly, H, spacing, res):
     # 기둥
     cols_x, cols_y = [0, Lx, Lx, 0], [0, 0, Ly, Ly]
     for i in range(4):
-        add_line([cols_x[i], cols_x[i]], [cols_y[i], cols_y[i]], [0, H], 'red', 'Column', 8)
-    # 거더 (X방향)
-    add_line([0, Lx], [0, 0], [H, H], 'blue', 'Girder', 6)
-    add_line([0, Lx], [Ly, Ly], [H, H], 'blue', 'Girder', 6)
-    # 테두리보 (Y방향 끝)
-    add_line([0, 0], [0, Ly], [H, H], 'orange', 'Edge Beam', 5)
-    add_line([Lx, Lx], [0, Ly], [H, H], 'orange', 'Edge Beam', 5)
-    # 작은보 (Y방향 내부)
-    curr_x = spacing
-    while curr_x < Lx - 100:
-        add_line([curr_x, curr_x], [0, Ly], [H, H], 'green', 'Small Beam', 3)
-        curr_x += spacing
-    # 슬래브
-    fig.add_trace(go.Mesh3d(x=[0, Lx, Lx, 0], y=[0, 0, Ly, Ly], z=[H
+        add_line([cols_x[i], cols_x[i]], [cols_y[i], cols_y[i]], [0, H], 'red', '
